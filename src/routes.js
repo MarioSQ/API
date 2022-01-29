@@ -31,6 +31,7 @@ routes.get('/consultar', function(req, res){
     })
    })
 
+
 // Buscar canais do cliente e encaminhar solicitação de envio
 routes.post('/enviar', function(req, res){
     fs.readFile('clientes.json', 'utf8', function(err, data){ 
@@ -43,13 +44,13 @@ routes.post('/enviar', function(req, res){
     
         obj.clientes.forEach(function(cliente) {
           if (cliente != null) {
-            if (cliente.id == req.query.id) {
+            if (cliente.cliente_id == req.query.cliente_id) {
             
             if (cliente.sms != null) {
                 result.push ('Mensagem enviada por SMS')
                 logger.info (('Mensagem enviada por SMS:')+' '+(cliente.sms) +' -> '+ (req.query.mensagem))
                 save = (req.body)
-                salvar (save)
+                salvar ()
 
             } 
             if (cliente.whatsapp != null) {
@@ -70,7 +71,7 @@ routes.post('/enviar', function(req, res){
           }
         }
         })
-        var response = {status: 'sucesso', resultado: result};
+        var response = {status: 'sucesso', resultado: result}
         res.json(response);
       }
     })
@@ -78,29 +79,28 @@ routes.post('/enviar', function(req, res){
 
 
 // Salvar mensagens na base
-
-function salvar (body) {
+function salvar () {
+  var result
     fs.readFile('envios.json', 'utf8', function(err, data){
       if (err) {
-        var response = {status: 'falha', resultado: err};
-        res.json(response);
+        logger.error ('Falha na inserção da mensagem JSON - 11000')
       } else {
         var obj = JSON.parse(data);
+        
         id = obj.mensagens.length + 1;
-    
+        
         obj.mensagens.push(save);
-    
+        
         fs.writeFile('envios.json', JSON.stringify(obj), function(err) {
           if (err) {
-            var response = {status:'falha', resultado: err};
-            // res.json(response);
+            logger.error ('Falha na inserção da mensagem JSON - 12000')
           } else {
-            var response = {status: 'sucesso', resultado: 'Registro inserido com sucesso'};
-            // res.json(response)
+            logger.info ('Registro inserido com sucesso!')
           }
         })
       }
     })
+    return result
   }
 
 module.exports = routes

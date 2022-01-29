@@ -8,7 +8,7 @@ const routes = require('./src/routes')
 const app = express()
 
 app.use(morgan('dev'))
-app.use(bodyParser.urlencoded({ extended: false}))
+app.use(bodyParser.urlencoded({ extended: true}))
 app.use(express.json())
 app.use(cors())
 app.use(routes)
