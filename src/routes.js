@@ -5,33 +5,26 @@ const logger = require('../log/logger')
 const env_sms = require('../src/env_sms')
 const env_whatsapp = require('../src/env_whatsapp')
 const env_email = require('../src/env_email')
+var save = []
 
-
-// Buscar canais do cliente e encaminhar solicitação
+// Buscar mensagens enviadas ao cliente
 routes.get('/consultar', function(req, res){
-    fs.readFile('clientes.json', 'utf8', function(err, data){ 
+    fs.readFile('envios.json', 'utf8', function(err, data){ 
       if (err) {
         var response = {status: 'falha', resultado: err}
         res.json(response)
       } else {
         var obj = JSON.parse(data)
-        var result = 'Nenhum usuário foi encontrado'
-    
-        obj.clientes.forEach(function(cliente) {
-          if (cliente != null) {
-            if (cliente.id == req.query.id) {
-              result = cliente
-              var sms = cliente.sms
-              var whatsapp = cliente.whatsapp
-              var email = cliente.email
-              console.log(email) 
-              console.log(whatsapp)
-              console.log(sms) 
+        var result = []
+            
+        obj.mensagens.forEach(function(mensagem) {
+          if (mensagem != null) {
+            if (mensagem.cliente_id == req.query.cliente_id) {
+              result.push (mensagem)
             }
         
           }
         })
-
         var response = {status: 'sucesso', resultado: result};
         res.json(response);
       }
@@ -55,6 +48,8 @@ routes.post('/enviar', function(req, res){
             if (cliente.sms != null) {
                 result.push ('Mensagem enviada por SMS')
                 logger.info (('Mensagem enviada por SMS:')+' '+(cliente.sms) +' -> '+ (req.query.mensagem))
+                save = (req.body)
+                salvar (save)
 
             } 
             if (cliente.whatsapp != null) {
@@ -80,5 +75,32 @@ routes.post('/enviar', function(req, res){
       }
     })
    })
+
+
+// Salvar mensagens na base
+
+function salvar (body) {
+    fs.readFile('envios.json', 'utf8', function(err, data){
+      if (err) {
+        var response = {status: 'falha', resultado: err};
+        res.json(response);
+      } else {
+        var obj = JSON.parse(data);
+        id = obj.mensagens.length + 1;
+    
+        obj.mensagens.push(save);
+    
+        fs.writeFile('envios.json', JSON.stringify(obj), function(err) {
+          if (err) {
+            var response = {status:'falha', resultado: err};
+            // res.json(response);
+          } else {
+            var response = {status: 'sucesso', resultado: 'Registro inserido com sucesso'};
+            // res.json(response)
+          }
+        })
+      }
+    })
+  }
 
 module.exports = routes
