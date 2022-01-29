@@ -1,7 +1,7 @@
 const express = require ('express')
 const routes = express.Router()
 const fs = require('fs')
-const logger = require('../logger')
+const logger = require('../log/logger')
 
 
 // Buscar canais do cliente e encaminhar solicitação
