@@ -2,6 +2,9 @@ const express = require ('express')
 const routes = express.Router()
 const fs = require('fs')
 const logger = require('../log/logger')
+const env_sms = require('../src/env_sms')
+const env_whatsapp = require('../src/env_whatsapp')
+const env_email = require('../src/env_email')
 
 
 // Buscar canais do cliente e encaminhar solicitação
