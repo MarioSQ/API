@@ -7,7 +7,7 @@ const env_whatsapp = require('../src/env_whatsapp')
 const env_email = require('../src/env_email')
 var save = []
 
-// Buscar mensagens enviadas ao cliente
+// Buscar mensagens enviadas ao cliente - UC04: Consultar Status Mensagem
 routes.get('/consultar', function(req, res){
     fs.readFile('envios.json', 'utf8', function(err, data){ 
       if (err) {
@@ -82,7 +82,7 @@ routes.post('/enviar', function(req, res){
    })
 
 
-// Salvar mensagens na base
+// Salvar mensagens na base // UC03: Atualizar Status Mensagem
 function salvar () {
   var result
     fs.readFile('envios.json', 'utf8', function(err, data){
