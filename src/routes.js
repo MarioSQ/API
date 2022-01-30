@@ -46,21 +46,21 @@ routes.post('/enviar', function(req, res){
           if (cliente != null) {
             if (cliente.cliente_id == req.query.cliente_id) { // UC02: Consulta Canais Cliente 
             
-            if (cliente.sms != null) { // UC05: Notificar Clientes SMS
+            if (cliente.sms != null) { // UC05: Notificar Cliente SMS
                 result.push ('Mensagem enviada por SMS')
                 logger.info (('Mensagem enviada por SMS:')+' '+(cliente.sms) +' -> '+ (req.query.mensagem))
                 save = (req.body) 
                 salvar ()
 
             } 
-            if (cliente.whatsapp != null) { // UC06: Notificar Clientes WhatsApp
+            if (cliente.whatsapp != null) { // UC06: Notificar Cliente WhatsApp
                 result.push('Mensagem enviada por WhatsApp')
                 logger.info (('Mensagem enviada por WhastApp:')+' '+(cliente.whatsapp) +' -> '+ (req.query.mensagem))
                 save = (req.body)
                 salvar ()
 
             } 
-            if (cliente.email != null) { // UC07: Notificar Clientes e-Mail
+            if (cliente.email != null) { // UC07: Notificar Cliente e-Mail
                 result.push ('Mensagem enviada por e-Mail')
                 logger.info (('Mensagem enviada por e-Mail:')+' '+(cliente.email) +' -> '+ (req.query.mensagem))
                 save = (req.body)
