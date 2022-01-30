@@ -32,7 +32,7 @@ routes.get('/consultar', function(req, res){
    })
 
 
-// Buscar canais do cliente e encaminhar solicitação de envio
+// Rota para buscar canais do cliente e encaminhar solicitação de envio - UC01: Notificar Clientes
 routes.post('/enviar', function(req, res){
     fs.readFile('clientes.json', 'utf8', function(err, data){ 
       if (err) {
@@ -44,23 +44,27 @@ routes.post('/enviar', function(req, res){
     
         obj.clientes.forEach(function(cliente) {
           if (cliente != null) {
-            if (cliente.cliente_id == req.query.cliente_id) {
+            if (cliente.cliente_id == req.query.cliente_id) { // UC02: Consulta Canais Cliente 
             
-            if (cliente.sms != null) {
+            if (cliente.sms != null) { // UC05: Notificar Clientes SMS
                 result.push ('Mensagem enviada por SMS')
                 logger.info (('Mensagem enviada por SMS:')+' '+(cliente.sms) +' -> '+ (req.query.mensagem))
+                save = (req.body) 
+                salvar ()
+
+            } 
+            if (cliente.whatsapp != null) { // UC06: Notificar Clientes WhatsApp
+                result.push('Mensagem enviada por WhatsApp')
+                logger.info (('Mensagem enviada por WhastApp:')+' '+(cliente.whatsapp) +' -> '+ (req.query.mensagem))
                 save = (req.body)
                 salvar ()
 
             } 
-            if (cliente.whatsapp != null) {
-                result.push('Mensagem enviada por WhatsApp')
-                logger.info (('Mensagem enviada por WhastApp:')+' '+(cliente.whatsapp) +' -> '+ (req.query.mensagem))
-
-            } 
-            if (cliente.email != null) {
+            if (cliente.email != null) { // UC07: Notificar Clientes e-Mail
                 result.push ('Mensagem enviada por e-Mail')
                 logger.info (('Mensagem enviada por e-Mail:')+' '+(cliente.email) +' -> '+ (req.query.mensagem))
+                save = (req.body)
+                salvar ()
 
             }
             if (cliente.sms == null && cliente.whatsapp == null && cliente.email == null) {
