@@ -142,3 +142,9 @@
 {"level":"info","message":"Mensagem enviada por WhastApp: 551199998888 -> undefined"}
 {"level":"info","message":"Mensagem enviada por e-Mail: bill@teste.com.br -> undefined"}
 {"level":"info","message":"Registro inserido com sucesso!"}
+{"level":"info","message":"Mensagem enviada por SMS: 551199998888 -> undefined"}
+{"level":"info","message":"Mensagem enviada por WhastApp: 551199998888 -> undefined"}
+{"level":"info","message":"Mensagem enviada por e-Mail: bill@teste.com.br -> undefined"}
+{"level":"info","message":"Registro inserido com sucesso!"}
+{"level":"info","message":"Registro inserido com sucesso!"}
+{"level":"info","message":"Registro inserido com sucesso!"}
